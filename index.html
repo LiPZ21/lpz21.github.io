@@ -14,43 +14,60 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: url('cover.jpg') no-repeat center center;
+            background: url('IMG_4368.png') no-repeat center center;
             background-size: cover;
             font-family: "Microsoft Yahei", sans-serif;
         }
         .countdown-wrap {
             position: absolute;
-            bottom: 80px;
+            bottom: 90px;
             width: 100%;
             text-align: center;
-            color: #ffffff;
-            text-shadow: 0 2px 12px rgba(0, 30, 80, 0.7);
         }
         #timer {
-            font-size: 48px;
-            letter-spacing: 4px;
-            font-weight: 600;
+            font-size: 56px;
+            letter-spacing: 6px;
+            font-weight: 700;
+            /* 金色渐变文字 */
+            background: linear-gradient(135deg, #ffe8a0, #d4af37, #fff2b8);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 18px rgba(212,175,55,0.45);
         }
         .label-text {
-            font-size: 20px;
-            margin-top: 12px;
+            font-size: 22px;
+            margin-top:14px;
+            color:#fff;
+            text-shadow: 0 2px 10px rgba(0,20,60,0.6);
+            letter-spacing:2px;
+        }
+        /* 磨砂底板，防止文字融在背景里 */
+        .timer-box{
+            display:inline-block;
+            padding:20px 40px;
+            background: rgba(10, 25, 60, 0.22);
+            border-radius:18px;
+            backdrop-filter: blur(8px);
+            border:1px solid rgba(255,255,255,0.2);
         }
     </style>
 </head>
 <body>
     <div class="countdown-wrap">
-        <div id="timer"></div>
-        <div class="label-text">距离本周六 00:00</div>
+        <div class="timer-box">
+            <div id="timer"></div>
+            <div class="label-text">游刃有余倒计时</div>
+        </div>
     </div>
     <script>
         function getNextSaturdayZero() {
             const now = new Date();
             const target = new Date(now);
-            // JS中周日=0，周六=6
+            // JS周日=0，周六=6
             let dayOffset = (6 - now.getDay() + 7) % 7;
             target.setDate(now.getDate() + dayOffset);
             target.setHours(0,0,0,0);
-            // 如果今天是周六且已过零点，则取下周六
+            // 如果今天是周六且已过零点，自动切换下周六
             if (dayOffset === 0 && now.getTime() > target.getTime()) {
                 target.setDate(target.getDate() + 7);
             }
@@ -62,7 +79,7 @@
             const now = Date.now();
             const diff = targetTime - now;
             if(diff <=0){
-                document.getElementById('timer').innerText = "时间已到";
+                document.getElementById('timer').innerText = "✨ 时间已到 ✨";
                 return;
             }
             const days = Math.floor(diff / (1000*60*60*24));
